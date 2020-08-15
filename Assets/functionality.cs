@@ -138,7 +138,7 @@ public class functionality : MonoBehaviour {
 			_isSolved = true;
 			Debug.LogFormat("[Popufur #{0}] Error during generation, solving module.", _moduleId);
 		}
-		if (goalId > 9)
+		else if (goalId > 9)
 		{
 			int nameId = goalId - 10;
 			int total = 0;
@@ -165,4 +165,34 @@ public class functionality : MonoBehaviour {
 			Init();
 		}
 	}
+	
+/*	KMSelectable[] ProcessTwitchCommand(string command)
+	{
+		Debug.LogFormat("[Popufur #{0}] TP command recieved.", _moduleId);
+		
+		command = command.ToLowerInvariant().Trim();
+		
+		if (Regex.IsMatch(command, @"^press( +((" + labelNames[leftLabel].ToLowerInvariant() + ")|(" + labelNames[rightLabel].ToLowerInvariant() + ")))+$"))
+		{
+			Debug.LogFormat("[Popufur #{0}] TP Command valid.", _moduleId);
+			
+			command = command.Substring(6).Trim();
+			string[] commandBits = Regex.Split(command, @" +");
+			KMSelectable[] TPOutput;
+			
+			for (int i = 0; i < commandBits.Length; i++)
+			{
+				if (commandBits[i] == labelNames[leftLabel].ToLowerInvariant()){
+					TPOutput[i] = patchLeft;
+				}
+				else{
+					TPOutput[i] = patchRight;
+				}
+			}
+			return TPOutput;
+		}
+		
+		return null;
+	}
+The arrays aren't playing nice today.*/
 }
