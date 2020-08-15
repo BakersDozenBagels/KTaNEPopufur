@@ -16,13 +16,16 @@ public class functionality : MonoBehaviour {
     public TextMesh textLeft, textRight;
     public MeshRenderer leftButton, rightButton;
 
+	private static readonly int[] colorInv = {7,4,5,6,1,2,3,0};
+	private static readonly Color[] colors = {new Color32(0,0,0,255), new Color32(255,0,0,255), new Color32(0,255,0,255), new Color32(0,0,255,255), new Color32(0,255,255,255), new Color32(255,0,255,255), new Color32(255,255,0,255), new Color32(255,255,255,255)};
 	private static readonly string[] names = {"TELEPHONE", "MAVERICK", "ADLER", "CHIP", "MAJIRA", "FLUKE"};
 	private static readonly int[,] colorTable = {{-1,10,3,9,8,4,5,11},{4,-1,7,12,6,2,2,7},{7,5,-1,3,3,3,8,3},{4,4,0,-1,0,6,0,5},{3,2,3,13,0,3,5,5},{7,2,8,4,5,-1,7,7},{1,7,3,1,2,0,-1,8},{5,14,4,7,15,6,6,-1}};
 	private string[] labelNames = {"UWU", "OWO", "AWOO", "YIFF", "MAWS", "PAWS"};
 	private string[] labelCodes = {"UVW", "012", "ABC", "XYZ", "ESY", "NOU"};
 	private string[] colorNames = {"black", "red", "green", "blue", "cyan", "magenta", "yellow", "white"};
 	private bool _isSolved = false, _lightsOn = false;
-	private int inputCnt, input;
+	private byte input;
+	private int inputCnt;
 	private int leftColor, rightColor, leftLabel, rightLabel;
 	private int goalId, goal;
 
@@ -38,9 +41,9 @@ public class functionality : MonoBehaviour {
 		leftLabel = Random.Range(0,6);
 		rightLabel = Random.Range(0,5);
 		if (rightLabel >= leftLabel) {rightLabel = rightLabel + 1;};
-	Debug.LogFormat("[Popufur #{0}] Left color is {1}, label {2}, right color is {3}, label is {4}.", _moduleId, colorNames[leftColor], labelNames[leftLabel], colorNames[rightColor], labelNames[rightLabel]); 
-        _moduleId = _moduleIdCounter++;
+		_moduleId = _moduleIdCounter++;
         Module.OnActivate += Activate;
+		Debug.LogFormat("[Popufur #{0}] Left color is {1}, label {2}, right color is {3}, label is {4}.", _moduleId, colorNames[leftColor], labelNames[leftLabel], colorNames[rightColor], labelNames[rightLabel]); 
     }
 	
 	//room shown (lights off)
@@ -68,6 +71,14 @@ public class functionality : MonoBehaviour {
 	//initialization for starts
 	void Init()
 	{
+		//button rendering
+		leftButton.material.color = colors[leftColor];
+		rightButton.material.color = colors[rightColor];
+		textLeft.text = labelNames[leftLabel];
+		textRight.text = labelNames[rightLabel];
+		textLeft.color = colors[colorInv[leftColor]];
+		textRight.color = colors[colorInv[rightColor]];
+		
 		//var reset
 		inputCnt = 0;
 		input = 0;
@@ -83,7 +94,7 @@ public class functionality : MonoBehaviour {
 		
 		if (!_lightsOn || _isSolved) return;
 		
-		input = (input << 1) + 1;
+		input = (byte)((input << 1) | 1);
 		inputCnt = inputCnt + 1;
 		Debug.LogFormat("[Popufur #{0}] Input #{1} recieved on left button.", _moduleId, inputCnt);
 		if (inputCnt == 8) check();
@@ -100,7 +111,7 @@ public class functionality : MonoBehaviour {
 		
 		if (!_lightsOn || _isSolved) return;
 		
-		input = (input << 1);
+		input = (byte)(input << 1);
 		inputCnt = inputCnt + 1;
 		Debug.LogFormat("[Popufur #{0}] Input #{1} recieved on right button.", _moduleId, inputCnt);
 		if (inputCnt == 8) check();
@@ -114,10 +125,10 @@ public class functionality : MonoBehaviour {
 		string indc = string.Join("", Info.GetIndicators().ToArray());
 		
 		if(sn.Any(labelCodes[rightLabel].Contains))
-			{input = ~input;
-			Debug.LogFormat("[Popufur #{0}] Left button is 1.", _moduleId);}
+			{Debug.LogFormat("[Popufur #{0}] Left button is 1.", _moduleId);}
 		else
-			{Debug.LogFormat("[Popufur #{0}] Right button is 1.", _moduleId);}
+			{input = (byte)~input;
+			Debug.LogFormat("[Popufur #{0}] Right button is 1.", _moduleId);}
 		
 			
 		goalId = colorTable[rightColor,leftColor];
