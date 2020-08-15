@@ -302,6 +302,36 @@ Prefab:
       propertyPath: m_Name
       value: popufur
       objectReference: {fileID: 0}
+    - target: {fileID: 102184300970698864, guid: ba6137a07fa2b1b4a94f0b9e7488d1b1,
+        type: 2}
+      propertyPath: m_Text
+      value: test
+      objectReference: {fileID: 0}
+    - target: {fileID: 102184300970698864, guid: ba6137a07fa2b1b4a94f0b9e7488d1b1,
+        type: 2}
+      propertyPath: m_Color.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 23473673908954816, guid: ba6137a07fa2b1b4a94f0b9e7488d1b1,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 78e445e1b81843344a05f92ecd5de690, type: 2}
+    - target: {fileID: 23423306371253596, guid: ba6137a07fa2b1b4a94f0b9e7488d1b1,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 78e445e1b81843344a05f92ecd5de690, type: 2}
+    - target: {fileID: 102543066669191696, guid: ba6137a07fa2b1b4a94f0b9e7488d1b1,
+        type: 2}
+      propertyPath: m_Text
+      value: test
+      objectReference: {fileID: 0}
+    - target: {fileID: 102543066669191696, guid: ba6137a07fa2b1b4a94f0b9e7488d1b1,
+        type: 2}
+      propertyPath: m_Color.rgba
+      value: 4279111273
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ba6137a07fa2b1b4a94f0b9e7488d1b1, type: 2}
   m_IsPrefabParent: 0
