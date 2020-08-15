@@ -166,7 +166,9 @@ public class functionality : MonoBehaviour {
 		}
 	}
 	
-/*	KMSelectable[] ProcessTwitchCommand(string command)
+	string TwitchHelpMessage = "Use !{0} press 'label' to press the patch of fur with that label. You can chain multiple presses with !{0} press 'label1' 'label2' ...";
+	
+	KMSelectable[] ProcessTwitchCommand(string command)
 	{
 		Debug.LogFormat("[Popufur #{0}] TP command recieved.", _moduleId);
 		
@@ -178,7 +180,7 @@ public class functionality : MonoBehaviour {
 			
 			command = command.Substring(6).Trim();
 			string[] commandBits = Regex.Split(command, @" +");
-			KMSelectable[] TPOutput;
+			KMSelectable[] TPOutput = new KMSelectable[commandBits.Length];
 			
 			for (int i = 0; i < commandBits.Length; i++)
 			{
@@ -194,5 +196,10 @@ public class functionality : MonoBehaviour {
 		
 		return null;
 	}
-The arrays aren't playing nice today.*/
+	
+	void TwitchHandleForcedSolve() {
+		Module.HandlePass();
+		Debug.LogFormat("[Popufur #{0}] Module force solved.", _moduleId);
+		_isSolved = true;
+	}
 }
