@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 114626204177118564}
   - component: {fileID: 114626298391341912}
   - component: {fileID: 114995836549658980}
+  - component: {fileID: 114561058814123290}
   m_Layer: 0
   m_Name: popufur 5
   m_TagString: Untagged
@@ -134,7 +135,7 @@ GameObject:
   - component: {fileID: 102543066669191696}
   - component: {fileID: 114458170178535214}
   m_Layer: 0
-  m_Name: TextLeft
+  m_Name: TextRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -687,6 +688,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - GUI/Text Shader
+--- !u!114 &114561058814123290
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1471425998453626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f20497e17ea2c8418997116c51035c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Audio: {fileID: 114999956487484222}
+  Module: {fileID: 114626298391341912}
+  Info: {fileID: 114626204177118564}
+  patchLeft: {fileID: 114288638275431926}
+  patchRight: {fileID: 114781946004238562}
+  textLeft: {fileID: 102184300970698864}
+  textRight: {fileID: 102543066669191696}
+  leftButton: {fileID: 23983327188654162}
+  rightButton: {fileID: 23316062812690526}
 --- !u!114 &114626204177118564
 MonoBehaviour:
   m_ObjectHideFlags: 1
