@@ -380,7 +380,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: afaa1643c8a27e54ba26e983ef371be9, type: 3}
+  - {fileID: 2100000, guid: 6b5febbc2e8b8274ba9d040f87ecc443, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -414,7 +414,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: afaa1643c8a27e54ba26e983ef371be9, type: 3}
+  - {fileID: 2100000, guid: 6b5febbc2e8b8274ba9d040f87ecc443, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -592,7 +592,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1010755667575818}
-  m_Text: 
+  m_Text: test1234567890 the quick brown fox jumps over the lazy dog
   m_OffsetZ: 0
   m_CharacterSize: 0.05
   m_LineSpacing: 1
@@ -613,7 +613,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1751967109901358}
-  m_Text: 
+  m_Text: test
   m_OffsetZ: 0
   m_CharacterSize: 0.02
   m_LineSpacing: 1
@@ -626,7 +626,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: afaa1643c8a27e54ba26e983ef371be9, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4279111273
 --- !u!114 &114126157572764770
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/Text Shader
+  - GUI/KT 3D Text
 --- !u!114 &114561058814123290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -804,7 +804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/Text Shader
+  - GUI/KT 3D Text
 --- !u!114 &114820041336653732
 MonoBehaviour:
   m_ObjectHideFlags: 1
