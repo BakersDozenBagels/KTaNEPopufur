@@ -325,6 +325,18 @@ Prefab:
       propertyPath: m_Color.rgba
       value: 4278190080
       objectReference: {fileID: 0}
+    - target: {fileID: 4975376877252770, guid: ba6137a07fa2b1b4a94f0b9e7488d1b1, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975376877252770, guid: ba6137a07fa2b1b4a94f0b9e7488d1b1, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4975376877252770, guid: ba6137a07fa2b1b4a94f0b9e7488d1b1, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ba6137a07fa2b1b4a94f0b9e7488d1b1, type: 2}
   m_IsPrefabParent: 0
