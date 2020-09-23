@@ -20,7 +20,7 @@ public class functionality : MonoBehaviour {
 	private static readonly Color[] colors = {new Color32(0,0,0,255), new Color32(255,0,0,255), new Color32(0,255,0,255), new Color32(0,0,255,255), new Color32(0,255,255,255), new Color32(255,0,255,255), new Color32(255,255,0,255), new Color32(255,255,255,255)};
 	private static readonly string[] names = {"TELEPHONE", "MAVERICK", "ADLER", "CHIP", "MAJIRA", "FLUKE"};
 	private static readonly int[,] colorTable = {{-1,10,3,9,8,4,5,11},{4,-1,7,12,6,2,2,7},{7,5,-1,3,3,3,8,3},{4,4,0,-1,0,6,0,5},{3,2,3,13,0,3,5,5},{7,2,8,4,5,-1,7,7},{1,7,3,1,2,0,-1,8},{5,14,4,7,15,6,6,-1}};
-	private string[] labelNames = {"UWU", "OWO", "AWOO", "YIFF", "MAWS", "PAWS"};
+	private string[] labelNames = {"UWU", "OWO", "AWOO", "RAWR", "MAWS", "PAWS"};
 	private string[] labelCodes = {"UVW", "012", "ABC", "XYZ", "ESY", "NOU"};
 	private string[] colorNames = {"black", "red", "green", "blue", "cyan", "magenta", "yellow", "white"};
 	private bool _isSolved = false, _lightsOn = false;

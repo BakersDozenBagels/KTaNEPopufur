@@ -26,7 +26,10 @@ MonoBehaviour:
     moduleID: popufur
 
 
-    Github link: https://github.com/BakersDozenBagels/KTaNEPopufur'
+    Github link: https://github.com/BakersDozenBagels/KTaNEPopufur
+
+
+    Manual link: https://ktane.timwi.de/HTML/Popufur.html'
   version: 1.2
   outputFolder: build
   previewImage: {fileID: 2800000, guid: b76acb0e5a1e09d4ba3d37d4b6bc75be, type: 3}
