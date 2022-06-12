@@ -30,6 +30,6 @@ MonoBehaviour:
 
 
     Manual link: https://ktane.timwi.de/HTML/Popufur.html'
-  version: 2.0
+  version: 2.1
   outputFolder: build
   previewImage: {fileID: 2800000, guid: b76acb0e5a1e09d4ba3d37d4b6bc75be, type: 3}

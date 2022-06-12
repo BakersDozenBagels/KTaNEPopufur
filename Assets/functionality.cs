@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Linq;
 using KMHelper;
+using System.Collections;
 
 public class functionality : MonoBehaviour
 {
@@ -20,14 +21,14 @@ public class functionality : MonoBehaviour
     private string[] labelNames = { "UWU", "OWO", "AWOO", "RAWR", "MAWS", "PAWS" };
     private string[] labelCodes = { "UVW", "012", "ABC", "XYZ", "ESY", "NOU" };
     private string[] colorNames = { "black", "red", "green", "blue", "cyan", "magenta", "yellow", "white" };
-    private bool _isSolved = false, _lightsOn = false;
+    private bool _isSolved, _lightsOn, _inv;
     private byte input;
     private int inputCnt;
     private int leftColor, rightColor, leftLabel, rightLabel;
-    private int goalId, goal;
+    private int goalId, goal, answer;
 
     private static int _moduleIdCounter = 1;
-    private int _moduleId = 0;
+    private int _moduleId;
 
     //Bomb generation (loading screen)
     void Start()
@@ -41,6 +42,44 @@ public class functionality : MonoBehaviour
         _moduleId = _moduleIdCounter++;
         Module.OnActivate += Activate;
         Debug.LogFormat("[Popufur #{0}] Left color is {1}, label {2}, right color is {3}, label is {4}.", _moduleId, colorNames[leftColor], labelNames[leftLabel], colorNames[rightColor], labelNames[rightLabel]);
+
+        //button rendering
+        Buttons.material.SetColor("_ColorL", colors[leftColor]);
+        Buttons.material.SetColor("_ColorR", colors[rightColor]);
+
+        textLeft.text = labelNames[leftLabel];
+        textRight.text = labelNames[rightLabel];
+        textLeft.color = colors[colorInv[leftColor]];
+        textRight.color = colors[colorInv[rightColor]];
+
+        string sn = Info.GetSerialNumber();
+        string indc = string.Join("", Info.GetIndicators().ToArray());
+
+        if(_inv = sn.Any(labelCodes[rightLabel].Contains))
+            Debug.LogFormat("[Popufur #{0}] Left button is 1.", _moduleId);
+        else
+            Debug.LogFormat("[Popufur #{0}] Right button is 1.", _moduleId);
+
+        goalId = colorTable[rightColor, leftColor];
+        if(goalId == -1)
+        {
+            Module.HandlePass();
+            _isSolved = true;
+            Debug.LogFormat("[Popufur #{0}] Error during generation, solving module.", _moduleId);
+        }
+        else if(goalId > 9)
+        {
+            int nameId = goalId - 10;
+            int total = 0;
+            foreach(char c in names[nameId])
+            {
+                total = total + indc.Count(f => (f == c));
+            }
+            goalId = total % 10;
+        }
+        Debug.LogFormat("[Popufur #{0}] Key number is {1}.", _moduleId, goalId);
+
+        answer = (Info.GetBatteryCount() + 1) * (goalId + 1);
     }
 
     //room shown (lights off)
@@ -68,15 +107,6 @@ public class functionality : MonoBehaviour
     //initialization for starts
     void Init()
     {
-        //button rendering
-        Buttons.material.SetColor("_ColorL", colors[leftColor]);
-        Buttons.material.SetColor("_ColorR", colors[rightColor]);
-
-        textLeft.text = labelNames[leftLabel];
-        textRight.text = labelNames[rightLabel];
-        textLeft.color = colors[colorInv[leftColor]];
-        textRight.color = colors[colorInv[rightColor]];
-
         //var reset
         inputCnt = 0;
         input = 0;
@@ -92,11 +122,12 @@ public class functionality : MonoBehaviour
 
         if(!_lightsOn || _isSolved) return;
 
-        input = (byte)((input << 1) | 1);
+        input = (byte)((input << 1) | (_inv ? 1 : 0));
         inputCnt = inputCnt + 1;
         Debug.LogFormat("[Popufur #{0}] Input #{1} recieved on left button.", _moduleId, inputCnt);
-        if(inputCnt == 8) check();
-        return;
+        Debug.LogFormat("[Popufur #{0}] Your submission is currently {1}.", _moduleId, input << (8 - inputCnt), 2);
+        if(inputCnt == 8)
+            check();
     }
 
     //right button handling
@@ -109,48 +140,17 @@ public class functionality : MonoBehaviour
 
         if(!_lightsOn || _isSolved) return;
 
-        input = (byte)(input << 1);
+        input = (byte)(input << 1 | (_inv ? 0 : 1));
         inputCnt = inputCnt + 1;
         Debug.LogFormat("[Popufur #{0}] Input #{1} recieved on right button.", _moduleId, inputCnt);
-        if(inputCnt == 8) check();
-        return;
+        Debug.LogFormat("[Popufur #{0}] Your submission is currently {1}.", _moduleId, input << (8 - inputCnt));
+        if(inputCnt == 8)
+            check();
     }
 
     //handle answer checking
     void check()
     {
-        string sn = Info.GetSerialNumber();
-        string indc = string.Join("", Info.GetIndicators().ToArray());
-
-        if(sn.Any(labelCodes[rightLabel].Contains))
-        { Debug.LogFormat("[Popufur #{0}] Left button is 1.", _moduleId); }
-        else
-        {
-            input = (byte)~input;
-            Debug.LogFormat("[Popufur #{0}] Right button is 1.", _moduleId);
-        }
-
-
-        goalId = colorTable[rightColor, leftColor];
-        if(goalId == -1)
-        {
-            Module.HandlePass();
-            _isSolved = true;
-            Debug.LogFormat("[Popufur #{0}] Error during generation, solving module.", _moduleId);
-        }
-        else if(goalId > 9)
-        {
-            int nameId = goalId - 10;
-            int total = 0;
-            foreach(char c in names[nameId])
-            {
-                total = total + indc.Count(f => (f == c));
-            }
-            goalId = total % 10;
-        }
-        Debug.LogFormat("[Popufur #{0}] Key number is {1}.", _moduleId, goalId);
-
-        int answer = (Info.GetBatteryCount() + 1) * (goalId + 1);
         Debug.LogFormat("[Popufur #{0}] Expected answer {1}, you input {2}.", _moduleId, answer, input);
 
         if(input == answer)
@@ -161,12 +161,13 @@ public class functionality : MonoBehaviour
         }
         else
         {
+            Debug.LogFormat("[Popufur #{0}] Module strike!", _moduleId);
             Module.HandleStrike();
             Init();
         }
     }
 
-    string TwitchHelpMessage = "Use !{0} press 'label' to press the patch of fur with that label. You can chain multiple presses with !{0} press 'label1' 'label2' ...";
+    string TwitchHelpMessage = "Use \"!{0} press 'label'\" to press the patch of fur with that label. You can chain multiple presses with \"!{0} press 'label1' 'label2' ...\". The word \"press\" is optional.";
 
     KMSelectable[] ProcessTwitchCommand(string command)
     {
@@ -174,24 +175,23 @@ public class functionality : MonoBehaviour
 
         command = command.ToLowerInvariant().Trim();
 
-        if(Regex.IsMatch(command, @"^press( +((" + labelNames[leftLabel].ToLowerInvariant() + ")|(" + labelNames[rightLabel].ToLowerInvariant() + ")))+$"))
+        if(Regex.IsMatch(command, @"^(press)?(\s+((" + labelNames[leftLabel].ToLowerInvariant() + ")|(" + labelNames[rightLabel].ToLowerInvariant() + ")))+$"))
         {
             Debug.LogFormat("[Popufur #{0}] TP Command valid.", _moduleId);
 
-            command = command.Substring(6).Trim();
-            string[] commandBits = Regex.Split(command, @" +");
+            string[] commandBits = Regex.Split(command, @"\s+");
+
+            if(commandBits[0] == "press")
+                commandBits = commandBits.Skip(1).ToArray();
+
             KMSelectable[] TPOutput = new KMSelectable[commandBits.Length];
 
             for(int i = 0; i < commandBits.Length; i++)
             {
                 if(commandBits[i] == labelNames[leftLabel].ToLowerInvariant())
-                {
                     TPOutput[i] = patchLeft;
-                }
                 else
-                {
                     TPOutput[i] = patchRight;
-                }
             }
             return TPOutput;
         }
@@ -199,10 +199,23 @@ public class functionality : MonoBehaviour
         return null;
     }
 
-    void TwitchHandleForcedSolve()
+    IEnumerator TwitchHandleForcedSolve()
     {
-        Module.HandlePass();
         Debug.LogFormat("[Popufur #{0}] Module force solved.", _moduleId);
-        _isSolved = true;
+        if(_isSolved)
+            yield break;
+        if(input << (8 - inputCnt) != (answer & (65280 >> inputCnt))) // 0b1111_1111_0000_0000
+        {
+            Debug.LogFormat("[Popufur #{0}] Previous inputs were incorrect; forcing the module into a solved state.", _moduleId);
+            Module.HandlePass();
+            _isSolved = true;
+            yield break;
+        }
+
+        while(!_isSolved)
+        {
+            ((((1 << (7 - inputCnt)) & answer) != 0) ^ _inv ? patchRight : patchLeft).OnInteract();
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
